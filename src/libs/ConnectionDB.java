@@ -40,7 +40,7 @@ public class ConnectionDB {
             if (con != null) {
                 stm = con.createStatement();
                 data = stm.executeQuery(sql);
-                JSONArray jsonArray = new JSONArray();                
+                JSONArray jsonArray = new JSONArray();               
                 jsonArray = ConvertFormats.parseResultSetToJson(data); // cambiar tipo de dato string a json
                 closeConnection(con);
                 return jsonArray;

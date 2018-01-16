@@ -32,15 +32,20 @@ public class CCreateFiles {
         if (!createFileSales()) {
             System.out.println("Error, no se pudo crear el archivo de ventas..");
         }
-        if (!createCustomers()) {
+        if (!createFileCustomers()) {
             System.out.println("Error, no se pudo crear el archivo de clientes..");
         }
-        if (!createSku()) {
+        if (!createFileSku()) {
             System.out.println("Error, no se pudo crear el archivo de sku..");
         }
-//        if (!createFileBillList()) {
-//            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
-//        }
+        if (!createFileInventory()) {
+            System.out.println("Error, no se pudo crear el archivo de inventario..");
+        }       
+        
+        
+        if (!createFileBillList()) {
+            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
+        }
 
         return null;
     }
@@ -66,14 +71,14 @@ public class CCreateFiles {
         return CreateFile.create("Z_TIPNEGOCIO", jsonArray);
     }
 
-    private static boolean createSku() {
+    private static boolean createFileSku() {
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.sku();
 
         return CreateFile.create("Z_SKU", jsonArray);
     }
 
-    private static boolean createCustomers() {
+    private static boolean createFileCustomers() {
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.customers();
 
@@ -81,18 +86,25 @@ public class CCreateFiles {
     }
 
     private static boolean createFileSales() {
-
         String month = getMonth();
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.sales(month);
+        
         return CreateFile.create("Z_VENTAS", jsonArray);
     }
 
-    private static boolean createFileBillList() {
+    private static boolean createFileBillList() {        
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.billList();
 
         return CreateFile.create("Z_LISTFACTURAS", jsonArray);
+    }
+    
+    private static boolean createFileInventory(){
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.inventory();
+        
+        return CreateFile.create("Z_INVENTARIO", jsonArray);
     }
 
     private static String getMonth() {

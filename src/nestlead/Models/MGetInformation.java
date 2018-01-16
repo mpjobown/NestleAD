@@ -47,14 +47,20 @@ public class MGetInformation {
 
     public static JSONArray billList() {
 
-        String sql = "select NitMov As CodigoCliente, VendedorMov As CodigoVendedor, FechaDctoMov As Fecha, NroMov As NroDocumento from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE where MesDctoMov=1 AND GrpMov in (9,41)";
+        String sql = "select NitMov As CodigoCliente, VendedorMov As CodigoVendedor, FechaDctoMov As Fecha, NroMov As NroDocumento from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE where MesDctoMov=1 AND GrpMov in (9,41) Group by NitMov, VendedorMov, FechaDctoMov, NroMov";
         return ConnectionDB.consult(new HostData(), sql);
     }
 
     public static JSONArray sales(String month) {
 
-        String sql = "select TipMov As Tipo, NroMov As Numero, ValorMov As Valor from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE where MesDctoMov=" + month + " AND GrpMov in (9,41)";
+        String sql = "select NitMov As CodCliente, ProductoMov As CodProducto, VendedorMov As CodVendedor, MID(FechaDctoMov,7,2)+MID(FechaDctoMov,5,2)+MID(FechaDctoMov,1,4) As Fecha, NroMov As NumDoc, CantidadMov As Cantidad, ValorMov As Valor, SWITCH(TipMov='F', '0', TipMov='J', '1') As Tipo, CompraInv As Compra from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE As M left join TABLA_INVENTARIOS As I ON M.ProductoMov=I.ProductoInv where MesDctoMov=" + month + " AND GrpMov in (9,41) AND GruMov='41'";
         return ConnectionDB.consult(new HostData(), sql);
 
+    }
+    
+    public static JSONArray inventory (){
+        
+        String sql = "select FechaInv As Fecha, ProductoInv As CodProducto, SaldoInv As Cantidad, 'UN' As UnidadMedida from TABLA_INVENTARIOS";
+        return ConnectionDB.consult(new HostData(), sql);
     }
 }
