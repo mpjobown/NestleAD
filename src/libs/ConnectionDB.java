@@ -5,10 +5,67 @@
  */
 package libs;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author trabajo
  */
 public class ConnectionDB {
+
+    private static Connection connect(HostData hostData) {
+
+        try {
+            Class.forName(hostData.getDriver());
+            Connection con = DriverManager.getConnection(hostData.getHost(), hostData.getName(), hostData.getPassword());
+            return con;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    public static ResultSet consult(HostData hostData, String sql) {
+
+        try {
+            Connection con = connect(hostData);
+            Statement stm;
+            ResultSet data;
+            
+            if(con != null){
+                stm = con.createStatement();
+                data = stm.executeQuery(sql);
+                return data;
+            }
+            return null;
+            
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
     
+    public static int afect(HostData hostData, String sql){
+        
+        try{
+            
+            Connection con = connect(hostData);
+            Statement stm;
+            int res = 0;
+            
+            if(con != null){
+                stm = con.createStatement();
+                res = stm.executeUpdate(sql);
+            }
+            return res;
+            
+        }catch(Exception e){
+            return 0;
+        }
+        
+    }
+
 }
