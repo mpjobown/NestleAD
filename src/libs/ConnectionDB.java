@@ -23,6 +23,7 @@ public class ConnectionDB {
             Connection con = DriverManager.getConnection(hostData.getHost(), hostData.getName(), hostData.getPassword());
             return con;
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
             return null;
         }
 
@@ -38,11 +39,14 @@ public class ConnectionDB {
             if(con != null){
                 stm = con.createStatement();
                 data = stm.executeQuery(sql);
+                closeConnection(con);
                 return data;
             }
+            closeConnection(con);
             return null;
             
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
             return null;
         }
 
@@ -60,10 +64,22 @@ public class ConnectionDB {
                 stm = con.createStatement();
                 res = stm.executeUpdate(sql);
             }
+            closeConnection(con);
             return res;
             
         }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
             return 0;
+        }
+        
+    }
+    
+    private static void closeConnection(Connection con){
+        
+        try{
+            con.close();
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
         }
         
     }
