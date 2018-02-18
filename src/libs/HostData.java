@@ -1,5 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package libs;
 
+import com.google.gson.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+/**
+ *
+ * @author trabajo
+ */
 public class HostData {
 
     private String driver;
@@ -8,10 +21,26 @@ public class HostData {
     private String password;
 
     public void HostData() {
-        //leer json
-        
+        //leer json 
 
-        setDriver(driver);
+        JsonParser parser = new JsonParser();
+
+        try {
+            Object obj = parser.parse(new FileReader("C:\\Users\\trabajo\\Documents\\NetBeansProjects\\NestleAD\\src\\config\\DataDB.json"));
+            JsonObject jsonObject = (JsonObject) obj;
+            driver = jsonObject.get("driver").toString();
+            host = jsonObject.get("host").toString();
+            name = jsonObject.get("name").toString();
+            password = jsonObject.get("password").toString();
+
+            setDriver(driver);
+            setHost(host);
+            setName(name);
+            setPassword(password);
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        }
     }
 
     public String getDriver() {
