@@ -6,6 +6,8 @@
 package nestlead.Models;
 
 import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import libs.ConnectionDB;
 import libs.HostData;
 
@@ -15,10 +17,9 @@ import libs.HostData;
  */
 public class MGetInformation {
 
-    public static ResultSet ejemplo() {
-
-        String sql = "SELECT * FROM TABLA_DESCRIPCION_CIUDAD";
-
-        return ConnectionDB.consult(new HostData(), sql);
+    public static ArrayList ejemplo() {
+        
+        String sql = "select NroCiudadCiu, NombreCiu from tabla_descripcion_ciudad order by NombreCiu";
+        return ConnectionDB.consult(new HostData(), sql);        
     }
 }

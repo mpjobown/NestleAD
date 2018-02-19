@@ -5,7 +5,7 @@
  */
 package nestlead;
 
-import libs.HostData;
+import nestlead.Models.MGetInformation;
 
 /**
  *
@@ -17,8 +17,7 @@ public class NestleAD {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here 
-        HostData prueba = new HostData();
-        System.out.println(prueba.getName());
-    }    
+
+        System.out.println(MGetInformation.ejemplo());
+    }
 }

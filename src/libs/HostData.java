@@ -20,7 +20,7 @@ public class HostData {
     private String name;
     private String password;
 
-    public void HostData() {
+    public HostData() {
         //leer json 
 
         JsonParser parser = new JsonParser();
