@@ -8,10 +8,8 @@ package libs;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.json.JSONArray;
 
 /**
  *
@@ -32,31 +30,21 @@ public class ConnectionDB {
 
     }
 
-    public static ArrayList consult(HostData hostData, String sql) {
+    public static JSONArray consult(HostData hostData, String sql) { // cambiar string a json
 
         try {
             Connection con = connect(hostData);
             Statement stm;
             ResultSet data;
-            ResultSetMetaData metaData; // analiza la estructura de las tablas a consultar de la DB
+
             if (con != null) {
                 stm = con.createStatement();
                 data = stm.executeQuery(sql);
-                metaData = data.getMetaData(); // obtiene la estructura de la tabla del query a ejecutar
-                int columns = metaData.getColumnCount(); // obtiene el numero de columnas de dicha tabla
+                JSONArray jsonArray = new JSONArray();
 
-                ArrayList results = new ArrayList();
-
-                while (data.next()) {
-                    HashMap row = new HashMap();
-                    results.add(row);
-
-                    for (int i = 1; i <= columns; i++) {
-                        row.put(metaData.getColumnName(i), data.getObject(i));
-                    }
-                }
+                jsonArray = ConvertFormats.parseResultSetToJson(data); // cambiar tipo de dato string a json
                 closeConnection(con);
-                return results;
+                return jsonArray;
             }
             closeConnection(con);
             return null;

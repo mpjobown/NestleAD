@@ -5,11 +5,9 @@
  */
 package nestlead.Models;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
 import libs.ConnectionDB;
 import libs.HostData;
+import org.json.JSONArray;
 
 /**
  *
@@ -17,9 +15,9 @@ import libs.HostData;
  */
 public class MGetInformation {
 
-    public static ArrayList ejemplo() {
-        
+    public static JSONArray ejemplo() {// cambiar tipo a json
+
         String sql = "select NroCiudadCiu, NombreCiu from tabla_descripcion_ciudad order by NombreCiu";
-        return ConnectionDB.consult(new HostData(), sql);        
+        return ConnectionDB.consult(new HostData(), sql);
     }
 }

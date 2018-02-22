@@ -5,7 +5,8 @@
  */
 package libs;
 
-import com.google.gson.*;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -22,7 +23,6 @@ public class HostData {
 
     public HostData() {
         //leer json 
-
         JsonParser parser = new JsonParser();
 
         try {
@@ -32,7 +32,7 @@ public class HostData {
             host = jsonObject.get("host").toString();
             name = jsonObject.get("name").toString();
             password = jsonObject.get("password").toString();
-
+            
             setDriver(driver);
             setHost(host);
             setName(name);
