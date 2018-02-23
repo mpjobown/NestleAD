@@ -7,8 +7,8 @@ package libs;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -18,16 +18,17 @@ public class ConvertFormats {
 
     public static JSONArray parseResultSetToJson(ResultSet resultSet) throws SQLException {
         JSONArray jsonArray = new JSONArray();
-        JSONArray array = new JSONArray();
+             
         while (resultSet.next()) {
             int columns = resultSet.getMetaData().getColumnCount(); // extrae el numero de columnas
-
+            JSONObject obj = new JSONObject();
             for (int i = 0; i < columns; i++) {
-                JSONObject obj = new JSONObject();
                 obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
-                jsonArray.put(obj);
-            }
+                jsonArray.put;
+            }  
+            
+           
         }
-        return array;
+        return jsonArray;
     }
 }
