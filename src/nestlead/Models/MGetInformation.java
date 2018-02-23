@@ -17,7 +17,7 @@ public class MGetInformation {
 
     public static JSONArray ejemplo() {// cambiar tipo a json
 
-        String sql = "select NroCiudadCiu, NombreCiu from tabla_descripcion_ciudad order by NombreCiu";
+        String sql = "select NroCiudadCiu, NombreCiu from tabla_descripcion_ciudad order by NroCiudadCiu";
         return ConnectionDB.consult(new HostData(), sql);
     }
 }

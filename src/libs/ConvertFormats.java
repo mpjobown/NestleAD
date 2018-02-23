@@ -18,16 +18,14 @@ public class ConvertFormats {
 
     public static JSONArray parseResultSetToJson(ResultSet resultSet) throws SQLException {
         JSONArray jsonArray = new JSONArray();
-             
+
         while (resultSet.next()) {
             int columns = resultSet.getMetaData().getColumnCount(); // extrae el numero de columnas
             JSONObject obj = new JSONObject();
             for (int i = 0; i < columns; i++) {
-                obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
-                jsonArray.put;
-            }  
-            
-           
+                obj.put(resultSet.getMetaData().getColumnName(i + 1).toLowerCase(), resultSet.getObject(i + 1));
+            }
+            jsonArray.add(obj);
         }
         return jsonArray;
     }
