@@ -5,7 +5,7 @@
  */
 package nestlead;
 
-import nestlead.Models.MGetInformation;
+import nestlead.Controllers.CCreateFiles;
 
 /**
  *
@@ -18,6 +18,6 @@ public class NestleAD {
      */
     public static void main(String[] args) {
 
-        System.out.println(MGetInformation.ejemplo());
+        CCreateFiles.createFiles();
     }
 }

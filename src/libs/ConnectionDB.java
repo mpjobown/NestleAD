@@ -20,7 +20,8 @@ public class ConnectionDB {
     private static Connection connect(HostData hostData) {
 
         try {
-            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+            Class.forName(hostData.getDriver());
             Connection con = DriverManager.getConnection("jdbc:odbc:pruebasiigo", "siigo", "123");
             return con;
         } catch (Exception e) {

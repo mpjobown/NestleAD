@@ -26,12 +26,13 @@ public class HostData {
         JsonParser parser = new JsonParser();
 
         try {
-            Object obj = parser.parse(new FileReader("C:\\Users\\trabajo\\Documents\\NetBeansProjects\\NestleAD\\src\\config\\DataDB.json"));
+            //Object obj = parser.parse(new FileReader("C:\\Users\\trabajo\\Documents\\NetBeansProjects\\NestleAD\\src\\config\\DataDB.json"));
+            Object obj = parser.parse(new FileReader("DataDB.json"));
             JsonObject jsonObject = (JsonObject) obj;
-            driver = jsonObject.get("driver").toString();
-            host = jsonObject.get("host").toString();
-            name = jsonObject.get("name").toString();
-            password = jsonObject.get("password").toString();
+            driver = jsonObject.get("driver").getAsString();
+            host = jsonObject.get("host").getAsString();
+            name = jsonObject.get("name").getAsString();
+            password = jsonObject.get("password").getAsString();
             
             setDriver(driver);
             setHost(host);

@@ -23,7 +23,7 @@ public class ConvertFormats {
             int columns = resultSet.getMetaData().getColumnCount(); // extrae el numero de columnas
             JSONObject obj = new JSONObject();
             for (int i = 0; i < columns; i++) {
-                obj.put(resultSet.getMetaData().getColumnName(i + 1).toLowerCase(), resultSet.getObject(i + 1));
+                obj.put(resultSet.getMetaData().getColumnName(i + 1), resultSet.getObject(i + 1).toString().trim());
             }
             jsonArray.add(obj);
         }
