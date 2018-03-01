@@ -15,9 +15,15 @@ import org.json.simple.JSONArray;
  */
 public class MGetInformation {
 
-    public static JSONArray ejemplo() {// cambiar tipo a json
+    public static JSONArray city() {// cambiar tipo a json
 
-        String sql = "select NroCiudadCiu, NombreCiu from tabla_descripcion_ciudad order by NroCiudadCiu";
+        String sql = "select NroCiudadCiu As Codigo, NombreCiu As Nombre from tabla_descripcion_ciudad order by NroCiudadCiu";
+        return ConnectionDB.consult(new HostData(), sql);
+    }
+    
+    public static JSONArray seller(){
+    
+        String sql = "select VenVen As Codigo, NombreVen As Nombre, ZonaVen As Ubicacion, CedulaVen As Cedula from tabla_descripcion_vendedores";
         return ConnectionDB.consult(new HostData(), sql);
     }
 }

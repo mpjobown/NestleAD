@@ -5,6 +5,7 @@
  */
 package nestlead.Controllers;
 
+import libs.CreateFile;
 import nestlead.Models.MGetInformation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,13 +19,26 @@ public class CCreateFiles {
 
     public static String createFiles() {
 
-        JSONArray jsonArray = new JSONArray();
-        jsonArray = MGetInformation.ejemplo();
-
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject o = (JSONObject) jsonArray.get(i);
-            System.out.println(o.get("NombreCiu"));
+        if (!createFileCities()) {
+            System.out.println("Error, no se pudo crear el archivo ciudades..");
+       }
+        if (!createFileSellers()){
+            System.out.println("Error, no se pudo crear el archivo vendedores..");
         }
         return null;
     }
+
+    private static boolean createFileCities() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.city();
+        
+        return CreateFile.create("cities", "Z_CIUDADES", jsonArray);
+    }
+    
+    private static boolean createFileSellers(){    
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.seller();
+
+        return CreateFile.create("sellers", "Z_VENDEDORES", jsonArray);
+    }    
 }

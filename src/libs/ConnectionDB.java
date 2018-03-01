@@ -22,13 +22,12 @@ public class ConnectionDB {
         try {
 
             Class.forName(hostData.getDriver());
-            Connection con = DriverManager.getConnection("jdbc:odbc:pruebasiigo", "siigo", "123");
+            Connection con = DriverManager.getConnection(hostData.getHost(), hostData.getName(), hostData.getPassword());
             return con;
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             return null;
         }
-
     }
 
     public static JSONArray consult(HostData hostData, String sql) { // cambiar string a json
@@ -41,8 +40,7 @@ public class ConnectionDB {
             if (con != null) {
                 stm = con.createStatement();
                 data = stm.executeQuery(sql);
-                JSONArray jsonArray = new JSONArray();
-
+                JSONArray jsonArray = new JSONArray();                
                 jsonArray = ConvertFormats.parseResultSetToJson(data); // cambiar tipo de dato string a json
                 closeConnection(con);
                 return jsonArray;
@@ -59,7 +57,6 @@ public class ConnectionDB {
     public static int afect(HostData hostData, String sql) {
 
         try {
-
             Connection con = connect(hostData);
             Statement stm;
             int res = 0;

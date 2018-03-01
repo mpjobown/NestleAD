@@ -17,16 +17,30 @@ import org.json.simple.JSONObject;
 public class ConvertFormats {
 
     public static JSONArray parseResultSetToJson(ResultSet resultSet) throws SQLException {
-        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonAll = new JSONArray();
+        JSONArray jsonHeaders = new JSONArray();
+        JSONArray jsonData = new JSONArray();        
+
+        boolean nameColumn = false;
 
         while (resultSet.next()) {
             int columns = resultSet.getMetaData().getColumnCount(); // extrae el numero de columnas
             JSONObject obj = new JSONObject();
             for (int i = 0; i < columns; i++) {
-                obj.put(resultSet.getMetaData().getColumnName(i + 1), resultSet.getObject(i + 1).toString().trim());
+                JSONObject objectHeaders = new JSONObject();
+                obj.put(resultSet.getMetaData().getColumnLabel(i + 1), resultSet.getObject(i + 1).toString().trim());
+
+                if (!nameColumn && i < columns) {
+                    objectHeaders.put("Field", resultSet.getMetaData().getColumnLabel(i + 1));
+                    jsonHeaders.add(objectHeaders);                    
+                    nameColumn = i == columns - 1 ? true : false;
+                }                
             }
-            jsonArray.add(obj);
+            jsonData.add(obj);
         }
-        return jsonArray;
+        jsonAll.add(jsonHeaders);         
+        jsonAll.add(jsonData); 
+        
+        return jsonAll;
     }
 }

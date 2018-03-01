@@ -1,0 +1,10 @@
+{
+    "cities":   
+            [{"name":"Codigo"},
+            {"name": "Ciudad"}],
+              
+    "sellers": [{"name": "Codigo"},
+               {"name":"NombreVendedor"}]
+}
+
+
