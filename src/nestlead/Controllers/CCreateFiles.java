@@ -21,24 +21,76 @@ public class CCreateFiles {
 
         if (!createFileCities()) {
             System.out.println("Error, no se pudo crear el archivo ciudades..");
-       }
-        if (!createFileSellers()){
+        }
+        if (!createFileSellers()) {
             System.out.println("Error, no se pudo crear el archivo vendedores..");
         }
+        if (!createFileBussinesType()) {
+            System.out.println("Error, no se pudo crear el archivo tipo de negocio..");
+        }
+        if (!createFileSales()) {
+            System.out.println("Error, no se pudo crear el archivo de ventas..");
+        }
+        if (!createCustomers()) {
+            System.out.println("Error, no se pudo crear el archivo de clientes..");
+        }
+        if (!createSku()) {
+            System.out.println("Error, no se pudo crear el archivo de sku..");
+        }
+        if (!createFileBillList()) {
+            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
+        }
+
         return null;
     }
 
     private static boolean createFileCities() {
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.city();
-        
-        return CreateFile.create("cities", "Z_CIUDADES", jsonArray);
+
+        return CreateFile.create("Z_CIUDADES", jsonArray);
     }
-    
-    private static boolean createFileSellers(){    
+
+    private static boolean createFileSellers() {
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.seller();
 
-        return CreateFile.create("sellers", "Z_VENDEDORES", jsonArray);
-    }    
+        return CreateFile.create("Z_VENDEDORES", jsonArray);
+    }
+
+    private static boolean createFileBussinesType() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.business();
+
+        return CreateFile.create("Z_TIPNEGOCIO", jsonArray);
+    }
+
+    private static boolean createSku() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.sku();
+
+        return CreateFile.create("Z_SKU", jsonArray);
+    }
+
+    private static boolean createCustomers() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.customers();
+
+        return CreateFile.create("Z_CLIENTES", jsonArray);
+    }
+
+    private static boolean createFileSales() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.sales();
+
+        return CreateFile.create("Z_VENTAS", jsonArray);
+    }
+
+    private static boolean createFileBillList() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.billList();
+
+        return CreateFile.create("Z_LISTFACTURAS", jsonArray);
+    }
+
 }

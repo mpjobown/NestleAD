@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
  */
 public class CreateFile {
 
-    public static boolean create(String item, String nameFile, JSONArray jsonArray) {
+    public static boolean create(String nameFile, JSONArray jsonArray) {
         //Elementos que crean el txt
         File archive;
         FileWriter wrArchive;
@@ -41,25 +41,26 @@ public class CreateFile {
                 for (int j = 0; j < jsonColumns.size(); j++) {
                     A = (JSONObject) jsonColumns.get(j);
                     arrayColumns.add(A.get("Field"));
-                    if (j  < arrayColumns.size()) {
+
+                    if (j < arrayColumns.size()) {
                         writeColumns = writeColumns + A.get("Field").toString() + "{";
-                    } else {
-                        writeColumns = writeColumns + "\r\n";
+                    } else {                        
+                        writeColumns = writeColumns + A.get("Field");
                     }
                 }
             }
-            wrArchive.write(writeColumns); //coloca el nombre a las columnas
+            wrArchive.write(writeColumns + "\r\n"); //coloca el nombre a las columnas
 
             JSONObject B = new JSONObject();
             String auxData = "";
-            for (int m = 1; m < jsonArray.size(); m++) {
-                JSONArray e = (JSONArray) jsonArray.get(m);
-                for (int marian = 0; marian < e.size(); marian++) {
-                    JSONObject C = (JSONObject) e.get(marian);
-                    for (int n = 0; n < arrayColumns.size(); n++) {
-                        String prueba = (String) C.get(arrayColumns.get(n));
+            for (int i = 1; i < jsonArray.size(); i++) {
+                JSONArray e = (JSONArray) jsonArray.get(i);
+                for (int j = 0; j < e.size(); j++) {
+                    JSONObject C = (JSONObject) e.get(j);
+                    for (int k = 0; k < arrayColumns.size(); k++) {
+                        String prueba = (String) C.get(arrayColumns.get(k));
                         String aux2 = prueba;
-                        if (n + 1 < arrayColumns.size()) {
+                        if (k + 1 < arrayColumns.size()) {
                             auxData = auxData + aux2 + "{";
                         } else {
                             auxData = auxData + aux2 + "\r\n";
