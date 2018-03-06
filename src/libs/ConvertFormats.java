@@ -34,13 +34,13 @@ public class ConvertFormats {
                     objectHeaders.put("Field", resultSet.getMetaData().getColumnLabel(i + 1));
                     jsonHeaders.add(objectHeaders);
                     nameColumn = i == columns - 1 ? true : false;
-                }
+                }                
             }
-            jsonData.add(obj);
-        }
-
+            jsonData.add(obj);            
+        }        
         jsonAll.add(jsonHeaders);
         jsonAll.add(jsonData);
+        
         return jsonAll;
     }
 }

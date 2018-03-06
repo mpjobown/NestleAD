@@ -24,21 +24,18 @@ public class CreateFile {
         File archive;
         FileWriter wrArchive;
         BufferedWriter bwArchive;
-        PrintWriter pwArchive;
 
         try {
             //inicializa elementos del txt
             archive = new File(nameFile + ".txt");
             wrArchive = new FileWriter(archive);
             bwArchive = new BufferedWriter(wrArchive);
-            pwArchive = new PrintWriter(bwArchive);
 
             JSONObject A = new JSONObject();
             String writeColumns = "";
             ArrayList arrayColumns = new ArrayList();
             for (int i = 0; i < jsonArray.size() - 1; i++) {
                 JSONArray jsonColumns = (JSONArray) jsonArray.get(i);
-                
                 for (int j = 0; j < jsonColumns.size(); j++) {
                     A = (JSONObject) jsonColumns.get(j);
                     arrayColumns.add(A.get("Field"));
@@ -51,25 +48,23 @@ public class CreateFile {
                 }
             }
             wrArchive.write(writeColumns + "\r\n"); //coloca el nombre a las columnas
-
-            JSONObject B = new JSONObject();
-            String auxData = "";
-            for (int i = 1; i < jsonArray.size(); i++) {
-                JSONArray e = (JSONArray) jsonArray.get(i);
-                for (int j = 0; j < e.size(); j++) {
-                    JSONObject C = (JSONObject) e.get(j);
-                    for (int k = 0; k < arrayColumns.size(); k++) {
-                        String prueba = (String) C.get(arrayColumns.get(k));
-                        String aux2 = prueba;
-                        if (k < arrayColumns.size() - 1) {
-                            auxData = auxData + aux2 + "{";
-                        } else {
-                            auxData = auxData + aux2 + "\r\n";
-                        }
+            
+            JSONArray B = (JSONArray) jsonArray.get(1);
+            for (int j = 0; j < B.size(); j++) {
+                String auxData = "";
+                JSONObject C = (JSONObject) B.get(j);
+                for (int k = 0; k < arrayColumns.size(); k++) {
+                    String aux1 = (String) C.get(arrayColumns.get(k));
+                    String aux2 = aux1;
+                    if (k < arrayColumns.size() - 1) {
+                        auxData = auxData + aux2 + "{";
+                    } else {
+                        auxData = auxData + aux2 + "\r\n";
                     }
                 }
+                wrArchive.append(auxData);
             }
-            wrArchive.append(auxData);
+           
             wrArchive.close();
             bwArchive.close();
             return true;

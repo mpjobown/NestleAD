@@ -9,7 +9,6 @@ import java.util.Calendar;
 import libs.CreateFile;
 import nestlead.Models.MGetInformation;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -23,28 +22,41 @@ public class CCreateFiles {
         if (!createFileCities()) {
             System.out.println("Error, no se pudo crear el archivo ciudades..");
         }
+
         if (!createFileSellers()) {
             System.out.println("Error, no se pudo crear el archivo vendedores..");
         }
+
         if (!createFileBussinesType()) {
             System.out.println("Error, no se pudo crear el archivo tipo de negocio..");
         }
-        if (!createFileSales()) {
-            System.out.println("Error, no se pudo crear el archivo de ventas..");
-        }
-        if (!createFileCustomers()) {
-            System.out.println("Error, no se pudo crear el archivo de clientes..");
-        }
+
         if (!createFileSku()) {
             System.out.println("Error, no se pudo crear el archivo de sku..");
         }
+
         if (!createFileInventory()) {
             System.out.println("Error, no se pudo crear el archivo de inventario..");
-        }       
-        
-        
+        }
+
         if (!createFileBillList()) {
             System.out.println("Error, no se pudo crear el archivo listado de facturas..");
+        }
+
+        if (!createFileSupervisor()) {
+            System.out.println("Error, no se pudo crear el archivo de supervisores..");
+        }
+
+        if (!createFileTotalSales()) {
+            System.out.println("Error, no se pudo crear el archivo totales de control.");
+        }
+        
+        if (!createFileCustomers()) {
+            System.out.println("Error, no se pudo crear el archivo de clientes..");
+        }
+
+        if (!createFileSales()) {
+            System.out.println("Error, no se pudo crear el archivo de ventas..");
         }
 
         return null;
@@ -54,7 +66,7 @@ public class CCreateFiles {
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.city();
 
-        return CreateFile.create("Z_CIUDADES", jsonArray);
+        return CreateFile.create("Z_MUNICIPIOS", jsonArray);
     }
 
     private static boolean createFileSellers() {
@@ -79,8 +91,9 @@ public class CCreateFiles {
     }
 
     private static boolean createFileCustomers() {
+        String month = getMonth();
         JSONArray jsonArray = new JSONArray();
-        jsonArray = MGetInformation.customers();
+        jsonArray = MGetInformation.customers(month);
 
         return CreateFile.create("Z_CLIENTES", jsonArray);
     }
@@ -89,22 +102,38 @@ public class CCreateFiles {
         String month = getMonth();
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.sales(month);
-        
+
         return CreateFile.create("Z_VENTAS", jsonArray);
     }
 
-    private static boolean createFileBillList() {        
+    private static boolean createFileBillList() {
+        String month = getMonth();
         JSONArray jsonArray = new JSONArray();
-        jsonArray = MGetInformation.billList();
+        jsonArray = MGetInformation.billList(month);
 
-        return CreateFile.create("Z_LISTFACTURAS", jsonArray);
+        return CreateFile.create("Z_LISTAFACTURAS", jsonArray);
     }
-    
-    private static boolean createFileInventory(){
+
+    private static boolean createFileInventory() {
         JSONArray jsonArray = new JSONArray();
         jsonArray = MGetInformation.inventory();
-        
+
         return CreateFile.create("Z_INVENTARIO", jsonArray);
+    }
+
+    private static boolean createFileSupervisor() {
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.supervisor();
+
+        return CreateFile.create("Z_SUPERVISORES", jsonArray);
+    }
+
+    private static boolean createFileTotalSales() {
+        String month = getMonth();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.totalSales(month);
+
+        return CreateFile.create("Z_TOTALESCONTROL", jsonArray);
     }
 
     private static String getMonth() {
@@ -118,8 +147,6 @@ public class CCreateFiles {
         } else {
             currentMonth = month == 0 ? "12" : (month) + "";
         }
-
         return currentMonth;
     }
-
 }
