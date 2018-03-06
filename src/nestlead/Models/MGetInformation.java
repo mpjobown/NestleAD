@@ -41,13 +41,13 @@ public class MGetInformation {
 
     public static JSONArray billList(String month) {
 
-        String sql = "select M.NitMov As CodigoCliente, M.VendedorMov As CodigoVendedor, MID(M.FechaDctoMov,7,2)+MID(M.FechaDctoMov,5,2)+MID(M.FechaDctoMov,1,4) As Fecha, M.NroMov As NroDocumento, F.SumaDeValorMov As TotFactura,Sum(IIF (M.DcMov='C', M.ValorMov, M.ValorMov*-1)) As TotCasa from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE AS M left join ODBC_TABLA_FACTURAS As F ON M.NroMov=F.NroMov  where MesDctoMov=" + month + " AND GrpMov in (9,41) AND M.GruMov='41' Group by M.NitMov, M.VendedorMov, M.FechaDctoMov, M.NroMov, F.SumaDeValorMov";
+        String sql = "select M.NitMov As CodigoCliente, M.VendedorMov As CodigoVendedor, MID(M.FechaDctoMov,7,2)+MID(M.FechaDctoMov,5,2)+MID(M.FechaDctoMov,1,4) As Fecha, M.NroMov As NroDocumento, F.SumaDeValorMov As TotFactura,  Sum(IIF (M.DcMov='C', M.ValorMov, M.ValorMov*-1)) As TotCasa from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE AS M left join ODBC_TABLA_FACTURAS As F ON M.NroMov=F.NroMov  where MesDctoMov=" + month + " AND GrpMov in (9,41) AND M.GruMov='41' AND TipMov='F' Group by M.NitMov, M.VendedorMov, M.FechaDctoMov, M.NroMov, F.SumaDeValorMov";
         return ConnectionDB.consult(new HostData(), sql);
     }
 
     public static JSONArray sales(String month) {
 
-        String sql = "select M.NitMov As CodCliente, M.VendedorMov As CodVendedor, M.ProductoMov As CodProducto, MID(M.FechaDctoMov,7,2)+MID(M.FechaDctoMov,5,2)+MID(M.FechaDctoMov,1,4) As Fecha, M.NroMov As NumDoc, M.CantidadMov As Cantidad, M.ValorMov As Valor, IIF(M.TipMov='F', '0', '1') As Tipo, I.CompraInv As Compra, 'UN' As TipoDeUnidad from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE As M left join TABLA_INVENTARIOS As I ON M.ProductoMov=I.ProductoInv where GruMov='41' AND MesDctoMov=" + month + " AND GrpMov in (9,41)";
+        String sql = "select M.NitMov As CodCliente, M.VendedorMov As CodVendedor, M.ProductoMov As CodProducto, MID(M.FechaDctoMov,7,2)+MID(M.FechaDctoMov,5,2)+MID(M.FechaDctoMov,1,4) As Fecha, M.NroMov As NumDoc, M.CantidadMov As Cantidad, M.ValorMov As Valor, IIF(M.DcMov='C', '0', '1') As Tipo, I.CompraInv As Compra, 'UN' As TipoDeUnidad from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE As M left join TABLA_INVENTARIOS As I ON M.ProductoMov=I.ProductoInv where GruMov='41' AND MesDctoMov=" + month + " AND GrpMov in (9,41)";
         return ConnectionDB.consult(new HostData(), sql);
     }
 
