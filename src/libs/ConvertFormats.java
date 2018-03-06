@@ -22,16 +22,16 @@ public class ConvertFormats {
         JSONArray jsonData = new JSONArray();        
 
         boolean nameColumn = false;
-
+        
         while (resultSet.next()) {
-            int columns = resultSet.getMetaData().getColumnCount(); // extrae el numero de columnas
+            int columns = resultSet.getMetaData().getColumnCount(); // extrae el numero de columnas            
             JSONObject obj = new JSONObject();
             for (int i = 0; i < columns; i++) {
                 JSONObject objectHeaders = new JSONObject();
                 obj.put(resultSet.getMetaData().getColumnLabel(i + 1), resultSet.getObject(i + 1).toString().trim());
 
                 if (!nameColumn && i < columns) {
-                    objectHeaders.put("Field", resultSet.getMetaData().getColumnLabel(i + 1));
+                    objectHeaders.put("Field", resultSet.getMetaData().getColumnLabel(i + 1));                    
                     jsonHeaders.add(objectHeaders);                    
                     nameColumn = i == columns - 1 ? true : false;
                 }                

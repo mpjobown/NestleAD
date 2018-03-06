@@ -5,6 +5,7 @@
  */
 package nestlead.Controllers;
 
+import java.util.Calendar;
 import libs.CreateFile;
 import nestlead.Models.MGetInformation;
 import org.json.simple.JSONArray;
@@ -37,9 +38,9 @@ public class CCreateFiles {
         if (!createSku()) {
             System.out.println("Error, no se pudo crear el archivo de sku..");
         }
-        if (!createFileBillList()) {
-            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
-        }
+//        if (!createFileBillList()) {
+//            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
+//        }
 
         return null;
     }
@@ -80,9 +81,10 @@ public class CCreateFiles {
     }
 
     private static boolean createFileSales() {
-        JSONArray jsonArray = new JSONArray();
-        jsonArray = MGetInformation.sales();
 
+        String month = getMonth();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = MGetInformation.sales(month);
         return CreateFile.create("Z_VENTAS", jsonArray);
     }
 
@@ -91,6 +93,21 @@ public class CCreateFiles {
         jsonArray = MGetInformation.billList();
 
         return CreateFile.create("Z_LISTFACTURAS", jsonArray);
+    }
+
+    private static String getMonth() {
+
+        Calendar c1 = Calendar.getInstance();
+        int day = c1.get(Calendar.DAY_OF_MONTH);
+        int month = c1.get(Calendar.MONDAY);
+        String currentMonth;
+        if (day != 5) {
+            currentMonth = (month + 1) + "";
+        } else {
+            currentMonth = month == 0 ? "12" : (month) + "";
+        }
+
+        return currentMonth;
     }
 
 }

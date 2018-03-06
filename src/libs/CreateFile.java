@@ -38,14 +38,15 @@ public class CreateFile {
             ArrayList arrayColumns = new ArrayList();
             for (int i = 0; i < jsonArray.size() - 1; i++) {
                 JSONArray jsonColumns = (JSONArray) jsonArray.get(i);
+                
                 for (int j = 0; j < jsonColumns.size(); j++) {
                     A = (JSONObject) jsonColumns.get(j);
                     arrayColumns.add(A.get("Field"));
 
-                    if (j < arrayColumns.size()) {
+                    if (j < jsonColumns.size() - 1) {
                         writeColumns = writeColumns + A.get("Field").toString() + "{";
-                    } else {                        
-                        writeColumns = writeColumns + A.get("Field");
+                    } else {
+                        writeColumns = writeColumns + A.get("Field").toString();
                     }
                 }
             }
@@ -60,7 +61,7 @@ public class CreateFile {
                     for (int k = 0; k < arrayColumns.size(); k++) {
                         String prueba = (String) C.get(arrayColumns.get(k));
                         String aux2 = prueba;
-                        if (k + 1 < arrayColumns.size()) {
+                        if (k < arrayColumns.size() - 1) {
                             auxData = auxData + aux2 + "{";
                         } else {
                             auxData = auxData + aux2 + "\r\n";
