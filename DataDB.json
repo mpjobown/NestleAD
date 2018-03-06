@@ -1,6 +1,6 @@
 {
     "driver": "sun.jdbc.odbc.JdbcOdbcDriver",
-    "host": "jdbc:odbc:pruebasiigo",
+    "host": "jdbc:odbc:accesAD",
     "name": "siigo",
     "password" : "123"    
 }

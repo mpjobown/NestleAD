@@ -27,7 +27,7 @@ public class CreateFile {
 
         try {
             //inicializa elementos del txt
-            archive = new File(nameFile + ".txt");
+            archive = new File("docs\\" + nameFile + ".txt");
             wrArchive = new FileWriter(archive);
             bwArchive = new BufferedWriter(wrArchive);
 
@@ -48,7 +48,7 @@ public class CreateFile {
                 }
             }
             wrArchive.write(writeColumns + "\r\n"); //coloca el nombre a las columnas
-            
+
             JSONArray B = (JSONArray) jsonArray.get(1);
             for (int j = 0; j < B.size(); j++) {
                 String auxData = "";
@@ -64,7 +64,7 @@ public class CreateFile {
                 }
                 wrArchive.append(auxData);
             }
-           
+
             wrArchive.close();
             bwArchive.close();
             return true;

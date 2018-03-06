@@ -41,7 +41,7 @@ public class MGetInformation {
 
     public static JSONArray billList(String month) {
 
-        String sql = "select M.NitMov As CodigoCliente, M.VendedorMov As CodigoVendedor, MID(M.FechaDctoMov,7,2)+MID(M.FechaDctoMov,5,2)+MID(M.FechaDctoMov,1,4) As Fecha, M.NroMov As NroDocumento, F.SumaDeValorMov As TotFactura,  Sum(IIF (M.DcMov='C', M.ValorMov, M.ValorMov*-1)) As TotCasa from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE AS M left join ODBC_TABLA_FACTURAS As F ON M.NroMov=F.NroMov  where MesDctoMov=" + month + " AND GrpMov in (9,41) AND M.GruMov='41' AND TipMov='F' Group by M.NitMov, M.VendedorMov, M.FechaDctoMov, M.NroMov, F.SumaDeValorMov";
+        String sql = "select M.NitMov As CodigoCliente, M.VendedorMov As CodigoVendedor, MID(M.FechaDctoMov,7,2)+MID(M.FechaDctoMov,5,2)+MID(M.FechaDctoMov,1,4) As Fecha, M.NroMov As NroDocumento, F.SumaDeValorMov As TotFactura, SUM(M.ValorMov) As TotCasa from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE AS M left join ODBC_TABLA_FACTURAS As F ON M.NroMov=F.NroMov  where MesDctoMov=" + month + " AND GrpMov in (9,41) AND M.GruMov='41' AND TipMov='F' Group by M.NitMov, M.VendedorMov, M.FechaDctoMov, M.NroMov, F.SumaDeValorMov";
         return ConnectionDB.consult(new HostData(), sql);
     }
 
@@ -65,7 +65,7 @@ public class MGetInformation {
     
     public static JSONArray totalSales(String month) {
     
-        String sql = "select 'TotalValorVenta' As TotalValorVenta, Format(Sum(IIF (DcMov='C', ValorMov, ValorMov*-1)),  'Fixed') As Valor from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE where MesDctoMov=" + month + " AND GrpMov in (9,41) AND GruMov='41'";
+        String sql = "select 'TotalValorVenta' As TotalValorVenta, Format(Sum(IIF (DcMov='C', ValorMov, ValorMov*-1)),  'General Number')+'.00' As Valor from ODBC_TABLA_MOVIMIENTO_POR_COMPROBANTE where MesDctoMov=" + month + " AND GrpMov in (9,41) AND GruMov='41'";
         return ConnectionDB.consult(new HostData(), sql);
     }
     
