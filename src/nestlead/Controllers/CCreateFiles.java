@@ -18,6 +18,15 @@ import org.json.simple.JSONArray;
 public class CCreateFiles {
 
     public static String createFiles() {
+        
+        
+        if (!createFileSupervisor()) {
+            System.out.println("Error, no se pudo crear el archivo de supervisores..");
+        }   
+        
+        if (!createFileTotalSales()) {
+            System.out.println("Error, no se pudo crear el archivo totales de control.");
+        }
 
         if (!createFileCities()) {
             System.out.println("Error, no se pudo crear el archivo ciudades..");
@@ -37,19 +46,7 @@ public class CCreateFiles {
 
         if (!createFileInventory()) {
             System.out.println("Error, no se pudo crear el archivo de inventario..");
-        }
-
-        if (!createFileBillList()) {
-            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
-        }
-
-        if (!createFileSupervisor()) {
-            System.out.println("Error, no se pudo crear el archivo de supervisores..");
-        }
-
-        if (!createFileTotalSales()) {
-            System.out.println("Error, no se pudo crear el archivo totales de control.");
-        }
+        }            
         
         if (!createFileCustomers()) {
             System.out.println("Error, no se pudo crear el archivo de clientes..");
@@ -57,6 +54,10 @@ public class CCreateFiles {
 
         if (!createFileSales()) {
             System.out.println("Error, no se pudo crear el archivo de ventas..");
+        }
+        
+        if (!createFileBillList()) {
+            System.out.println("Error, no se pudo crear el archivo listado de facturas..");
         }
 
         return null;

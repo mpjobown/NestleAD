@@ -1,2 +1,0 @@
-TotalValorVenta{Valor
-TotalValorVenta{536991106.00
